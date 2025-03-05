@@ -128,38 +128,70 @@
 <script>
     let casts = [];
     const hexagrams = {
-        '111111': { number: 1, name: 'Ch\'ien' }, '000000': { number: 2, name: 'K\'un' },
-        '100010': { number: 3, name: 'Chun' }, '000010': { number: 4, name: 'Mêng' },
-        '111010': { number: 5, name: 'Hsü' }, '010111': { number: 6, name: 'Sung' },
-        '010000': { number: 7, name: 'Shih' }, '000010': { number: 8, name: 'Pi' },
-        '111011': { number: 9, name: 'Hsiao Ch\'u' }, '110111': { number: 10, name: 'Li' },
-        '111000': { number: 11, name: 'T\'ai' }, '000111': { number: 12, name: 'P\'i' },
-        '101111': { number: 13, name: 'T\'ung Jên' }, '111101': { number: 14, name: 'Ta Yu' },
-        '001000': { number: 15, name: 'Ch\'ien' }, '000100': { number: 16, name: 'Yü' },
-        '110010': { number: 17, name: 'Sui' }, '001011': { number: 18, name: 'Ku' },
-        '110000': { number: 19, name: 'Lin' }, '000011': { number: 20, name: 'Kuan' },
-        '100010': { number: 21, name: 'Shih Ho' }, '010001': { number: 22, name: 'Pi' },
-        '000001': { number: 23, name: 'Po' }, '100000': { number: 24, name: 'Fu' },
-        '100111': { number: 25, name: 'Wu Wang' }, '111001': { number: 26, name: 'Ta Ch\'u' },
-        '100001': { number: 27, name: 'I' }, '011110': { number: 28, name: 'Ta Kuo' },
-        '010110': { number: 29, name: 'K\'an' }, '101101': { number: 30, name: 'Li' },
-        '001110': { number: 31, name: 'Hsien' }, '011100': { number: 32, name: 'Hêng' },
-        '111100': { number: 33, name: 'Tun' }, '001111': { number: 34, name: 'Ta Chuang' },
-        '000101': { number: 35, name: 'Chin' }, '101000': { number: 36, name: 'Ming I' },
-        '101011': { number: 37, name: 'Chia Jên' }, '110101': { number: 38, name: 'K\'uei' },
-        '001010': { number: 39, name: 'Chien' }, '010100': { number: 40, name: 'Hsieh' },
-        '100011': { number: 41, name: 'Sun' }, '110001': { number: 42, name: 'I' },
-        '111110': { number: 43, name: 'Kuai' }, '011111': { number: 44, name: 'Kou' },
-        '000110': { number: 45, name: 'Ts\'ui' }, '011000': { number: 46, name: 'Shêng' },
-        '011010': { number: 47, name: 'K\'un' }, '010110': { number: 48, name: 'Ching' },
-        '101110': { number: 49, name: 'Ko' }, '011101': { number: 50, name: 'Ting' },
-        '100100': { number: 51, name: 'Chên' }, '001001': { number: 52, name: 'Kên' },
-        '001011': { number: 53, name: 'Chien' }, '110100': { number: 54, name: 'Kuei Mei' },
-        '101100': { number: 55, name: 'Fêng' }, '001101': { number: 56, name: 'Lü' },
-        '011011': { number: 57, name: 'Sun' }, '110110': { number: 58, name: 'Tui' },
-        '010011': { number: 59, name: 'Huan' }, '001101': { number: 60, name: 'Chieh' },
-        '110011': { number: 61, name: 'Chung Fu' }, '001100': { number: 62, name: 'Hsiao Kuo' },
-        '101010': { number: 63, name: 'Chi Chi' }, '010101': { number: 64, name: 'Wei Chi' }
+        '111111': { number: 1, name: 'Ch\'ien', englishName: 'The Creative' }, 
+        '000000': { number: 2, name: 'K\'un', englishName: 'The Receptive' },
+        '100010': { number: 3, name: 'Chun', englishName: 'Difficulty at the Beginning' }, 
+        '000010': { number: 4, name: 'Mêng', englishName: 'Youthful Folly' },
+        '111010': { number: 5, name: 'Hsü', englishName: 'Waiting' }, 
+        '010111': { number: 6, name: 'Sung', englishName: 'Conflict' },
+        '010000': { number: 7, name: 'Shih', englishName: 'The Army' }, 
+        '000010': { number: 8, name: 'Pi', englishName: 'Holding Together' },
+        '111011': { number: 9, name: 'Hsiao Ch\'u', englishName: 'The Taming Power of the Small' }, 
+        '110111': { number: 10, name: 'Li', englishName: 'Treading' },
+        '111000': { number: 11, name: 'T\'ai', englishName: 'Peace' }, 
+        '000111': { number: 12, name: 'P\'i', englishName: 'Standstill' },
+        '101111': { number: 13, name: 'T\'ung Jên', englishName: 'Fellowship with Men' }, 
+        '111101': { number: 14, name: 'Ta Yu', englishName: 'Possession in Great Measure' },
+        '001000': { number: 15, name: 'Ch\'ien', englishName: 'Modesty' }, 
+        '000100': { number: 16, name: 'Yü', englishName: 'Enthusiasm' },
+        '110010': { number: 17, name: 'Sui', englishName: 'Following' }, 
+        '001011': { number: 18, name: 'Ku', englishName: 'Work on What Has Been Spoiled' },
+        '110000': { number: 19, name: 'Lin', englishName: 'Approach' }, 
+        '000011': { number: 20, name: 'Kuan', englishName: 'Contemplation' },
+        '100010': { number: 21, name: 'Shih Ho', englishName: 'Biting Through' }, 
+        '010001': { number: 22, name: 'Pi', englishName: 'Grace' },
+        '000001': { number: 23, name: 'Po', englishName: 'Splitting Apart' }, 
+        '100000': { number: 24, name: 'Fu', englishName: 'Return' },
+        '100111': { number: 25, name: 'Wu Wang', englishName: 'Innocence' }, 
+        '111001': { number: 26, name: 'Ta Ch\'u', englishName: 'The Taming Power of the Great' },
+        '100001': { number: 27, name: 'I', englishName: 'Corners of the Mouth' }, 
+        '011110': { number: 28, name: 'Ta Kuo', englishName: 'Preponderance of the Great' },
+        '010110': { number: 29, name: 'K\'an', englishName: 'The Abysmal' }, 
+        '101101': { number: 30, name: 'Li', englishName: 'The Clinging' },
+        '001110': { number: 31, name: 'Hsien', englishName: 'Influence' }, 
+        '011100': { number: 32, name: 'Hêng', englishName: 'Duration' },
+        '111100': { number: 33, name: 'Tun', englishName: 'Retreat' }, 
+        '001111': { number: 34, name: 'Ta Chuang', englishName: 'The Power of the Great' },
+        '000101': { number: 35, name: 'Chin', englishName: 'Progress' }, 
+        '101000': { number: 36, name: 'Ming I', englishName: 'Darkening of the Light' },
+        '101011': { number: 37, name: 'Chia Jên', englishName: 'The Family' }, 
+        '110101': { number: 38, name: 'K\'uei', englishName: 'Opposition' },
+        '001010': { number: 39, name: 'Chien', englishName: 'Obstruction' }, 
+        '010100': { number: 40, name: 'Hsieh', englishName: 'Deliverance' },
+        '100011': { number: 41, name: 'Sun', englishName: 'Decrease' }, 
+        '110001': { number: 42, name: 'I', englishName: 'Increase' },
+        '111110': { number: 43, name: 'Kuai', englishName: 'Break-through' }, 
+        '011111': { number: 44, name: 'Kou', englishName: 'Coming to Meet' },
+        '000110': { number: 45, name: 'Ts\'ui', englishName: 'Gathering Together' }, 
+        '011000': { number: 46, name: 'Shêng', englishName: 'Pushing Upward' },
+        '011010': { number: 47, name: 'K\'un', englishName: 'Oppression' }, 
+        '010110': { number: 48, name: 'Ching', englishName: 'The Well' },
+        '101110': { number: 49, name: 'Ko', englishName: 'Revolution' }, 
+        '011101': { number: 50, name: 'Ting', englishName: 'The Cauldron' },
+        '100100': { number: 51, name: 'Chên', englishName: 'The Arousing' }, 
+        '001001': { number: 52, name: 'Kên', englishName: 'Keeping Still' },
+        '001011': { number: 53, name: 'Chien', englishName: 'Development' }, 
+        '110100': { number: 54, name: 'Kuei Mei', englishName: 'The Marrying Maiden' },
+        '101100': { number: 55, name: 'Fêng', englishName: 'Abundance' }, 
+        '001101': { number: 56, name: 'Lü', englishName: 'The Wanderer' },
+        '011011': { number: 57, name: 'Sun', englishName: 'The Gentle' }, 
+        '110110': { number: 58, name: 'Tui', englishName: 'The Joyous' },
+        '010011': { number: 59, name: 'Huan', englishName: 'Dispersion' }, 
+        '001101': { number: 60, name: 'Chieh', englishName: 'Limitation' },
+        '110011': { number: 61, name: 'Chung Fu', englishName: 'Inner Truth' }, 
+        '001100': { number: 62, name: 'Hsiao Kuo', englishName: 'Preponderance of the Small' },
+        '101010': { number: 63, name: 'Chi Chi', englishName: 'After Completion' }, 
+        '010101': { number: 64, name: 'Wei Chi', englishName: 'Before Completion' }
     };
 
     function castCoin() {
@@ -202,11 +234,11 @@
             const transformedBinary = transformedLines.map(c => (c === 8) ? '0' : '1').join('');
             const hexagram = getHexagramNumber(originalBinary);
             const transformedHex = getHexagramNumber(transformedBinary);
-            document.getElementById('original-number').textContent = `${hexagram.number}. ${hexagram.name}`;
-            document.getElementById('transformed-number').textContent = `${transformedHex.number}. ${transformedHex.name}`;
+            document.getElementById('original-number').textContent = `${hexagram.number}. ${hexagram.name} (${hexagram.englishName})`;
+            document.getElementById('transformed-number').textContent = `${transformedHex.number}. ${transformedHex.name} (${transformedHex.englishName})`;
 
             const changingLines = casts.map((c, i) => (c === 6 || c === 9) ? i + 1 : null).filter(x => x !== null);
-            document.getElementById('copy-text').textContent = `Original: ${hexagram.number}. ${hexagram.name}\nTransformed: ${transformedHex.number}. ${transformedHex.name}\nChanging Lines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
+            document.getElementById('copy-text').textContent = `Original: ${hexagram.number}. ${hexagram.englishName}\nTransformed: ${transformedHex.number}. ${transformedHex.englishName}\nChanging Lines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
 
             document.getElementById('transformed-container').style.visibility = 'visible';
             document.getElementById('copy-button').style.display = 'inline-block';
