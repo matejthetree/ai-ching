@@ -106,7 +106,7 @@
                 </div>
                 <div id="original-number" class="text-center mt-2"></div>
             </div>
-            <div class="col-12 col-md-6" id="transformed-container" style="display: none;">
+            <div class="col-12 col-md-6" id="transformed-container" style="visibility: hidden;">
                 <h3 class="text-center">Transformed Hexagram</h3>
                 <div class="hexagram-display">
                     <div id="transformed-hex" class="hexagram-lines"></div>
@@ -164,10 +164,12 @@
     function updateDisplay() {
         const originalHex = document.getElementById('original-hex');
         originalHex.innerHTML = generateLinesHTML(casts, casts.map((c, i) => (c === 6 || c === 9) ? i : -1).filter(x => x >= 0));
+        
+        // Always generate transformed hexagram but keep hidden until complete
+        const transformedLines = getTransformedLines(casts);
+        document.getElementById('transformed-hex').innerHTML = generateLinesHTML(transformedLines);
 
         if (casts.length === 6) {
-            const transformedLines = getTransformedLines(casts);
-            document.getElementById('transformed-hex').innerHTML = generateLinesHTML(transformedLines);
 
             const originalBinary = casts.map(c => (c === 6 || c === 8) ? '0' : '1').join('');
             const transformedBinary = transformedLines.map(c => (c === 8) ? '0' : '1').join('');
@@ -179,12 +181,12 @@
             const changingLines = casts.map((c, i) => (c === 6 || c === 9) ? i + 1 : null).filter(x => x !== null);
             document.getElementById('copy-text').textContent = `Hexagram: ${hexagram}\nTransformed: ${transformedHex}\nLines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
 
-            document.getElementById('transformed-container').style.display = 'block';
+            document.getElementById('transformed-container').style.visibility = 'visible';
             document.getElementById('copy-button').style.display = 'inline-block';
             document.getElementById('cast-again').style.display = 'inline-block';
             document.getElementById('coin-container').style.display = 'none';
         } else {
-            document.getElementById('transformed-container').style.display = 'none';
+            document.getElementById('transformed-container').style.visibility = 'hidden';
             document.getElementById('copy-button').style.display = 'none';
             document.getElementById('cast-again').style.display = 'none';
             document.getElementById('coin-container').style.display = 'flex';
