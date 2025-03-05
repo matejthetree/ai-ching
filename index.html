@@ -33,7 +33,7 @@
         }
         .hexagram-display {
             width: 200px;
-            height: 150px; /* 6 lines * (20px height + 5px margin) = 150px */
+            height: 180px; /* 6 lines * (25px total height with margins) */
             margin: 0 auto;
         }
         .hexagram-lines {
@@ -119,23 +119,23 @@
         </div>
     </div>
     <div id="copy-text" class="mt-4 p-3 bg-light border text-center"></div>
-    <div class="text-center">
-        <button id="copy-button" class="btn btn-primary mt-2" style="display: none;" onclick="copyResult()">Copy Result</button>
-        <button id="cast-again" class="btn btn-secondary mt-3" style="display: none;" onclick="resetCasting()">Cast Again</button>
+    <div class="text-center d-flex justify-content-center gap-2">
+        <button id="copy-button" class="btn btn-primary mt-2<" style="display: none;" onclick="copyResult()">Copy Result</button>
+        button id="cast-again" class="btn btn-secondary mt-2" style="display: none;" onclick="resetCasting()">Cast Again</button>
     </div>
 </div>
 
 <script>
     let casts = [];
     const hexagrams = {
-        '111111': 1, '000000': 2, '010010': 3, '010011': 4, '111010': 5, '010111': 6, '010000': 7, '000010': 8,
+        '111111': 1, '000000': 2, '100010': 3, '000010': 4, '111010': 5, '010111': 6, '010000': 7, '000010': 8,
         '111011': 9, '110111': 10, '111000': 11, '000111': 12, '101111': 13, '111101': 14, '001000': 15, '000100': 16,
-        '110010': 17, '010011': 18, '110000': 19, '000011': 20, '100010': 21, '010001': 22, '000001': 23, '100000': 24,
-        '100111': 25, '111001': 26, '100001': 27, '011110': 28, '010010': 29, '101101': 30, '001110': 31, '011100': 32,
+        '110010': 17, '001011': 18, '110000': 19, '000011': 20, '100010': 21, '010001': 22, '000001': 23, '100000': 24,
+        '100111': 25, '111001': 26, '100001': 27, '011110': 28, '010110': 29, '101101': 30, '001110': 31, '011100': 32,
         '111100': 33, '001111': 34, '000101': 35, '101000': 36, '101011': 37, '110101': 38, '001010': 39, '010100': 40,
         '100011': 41, '110001': 42, '111110': 43, '011111': 44, '000110': 45, '011000': 46, '011010': 47, '010110': 48,
         '101110': 49, '011101': 50, '100100': 51, '001001': 52, '001011': 53, '110100': 54, '101100': 55, '001101': 56,
-        '011011': 57, '110110': 58, '110010': 59, '010011': 60, '110011': 61, '001100': 62, '101010': 63, '010101': 64
+        '011011': 57, '110110': 58, '010011': 59, '001101': 60, '110011': 61, '001100': 62, '101010': 63, '010101': 64
     };
 
     function castCoin() {
