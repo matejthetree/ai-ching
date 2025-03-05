@@ -187,7 +187,6 @@
             document.getElementById('transformed-container').style.visibility = 'visible';
             document.getElementById('copy-button').style.display = 'inline-block';
             document.getElementById('cast-again').style.display = 'inline-block';
-            document.getElementById('coin-container').style.display = 'none';
         } else {
             document.getElementById('transformed-container').style.visibility = 'hidden';
             document.getElementById('copy-button').style.display = 'none';
@@ -208,6 +207,10 @@
 
     function resetCasting() {
         casts = [];
+        document.getElementById('original-number').textContent = '';
+        document.getElementById('transformed-number').textContent = '';
+        document.getElementById('copy-text').textContent = '';
+        document.getElementById('transformed-container').style.visibility = 'hidden';
         updateDisplay();
     }
 </script>
