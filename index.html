@@ -27,6 +27,18 @@
             justify-content: center;
             font-size: 24px;
             transition: transform 0.2s;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        
+        .coin:active {
+            animation: bounce 0.2s;
         }
         .coin-container:hover .coin {
             transform: scale(1.1);
@@ -238,7 +250,7 @@
             document.getElementById('transformed-number').textContent = `${transformedHex.number}. ${transformedHex.name} (${transformedHex.englishName})`;
 
             const changingLines = casts.map((c, i) => (c === 6 || c === 9) ? i + 1 : null).filter(x => x !== null);
-            document.getElementById('copy-text').textContent = `Original: ${hexagram.number}. ${hexagram.englishName}\nTransformed: ${transformedHex.number}. ${transformedHex.englishName}\nChanging Lines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
+            document.getElementById('copy-text').textContent = `Original: ${hexagram.number}\nTransformed: ${transformedHex.number}\nChanging Lines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
 
             document.getElementById('transformed-container').style.visibility = 'visible';
             document.getElementById('copy-button').style.display = 'inline-block';
@@ -259,7 +271,9 @@
     function copyResult() {
         const text = document.getElementById('copy-text').textContent;
         navigator.clipboard.writeText(text);
-        alert('Result copied to clipboard!');
+        const btn = document.getElementById('copy-button');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy Result', 2000);
     }
 
     function resetCasting() {
