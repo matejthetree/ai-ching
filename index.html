@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Ching Coin Casting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .coin-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .coin {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #d4a017;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+        .coin-container:hover .coin {
+            transform: scale(1.1);
+        }
+        .hexagram-display {
+            width: 200px;
+            height: 150px; /* 6 lines * (20px height + 5px margin) = 150px */
+            margin: 0 auto;
+        }
+        .hexagram-lines {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column-reverse; /* Bottom-to-top stacking */
+            align-items: center;
+        }
+        .line {
+            width: 100%;
+            height: 20px;
+            margin: 5px 0;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .broken {
+            background: repeating-linear-gradient(
+                    to right,
+                    rgba(0,0,0,0.7) 0px,
+                    rgba(0,0,0,0.7) 80px,
+                    transparent 80px,
+                    transparent 120px
+            );
+        }
+        .changing {
+            background-color: rgba(255,0,0,0.7);
+        }
+        .broken.changing {
+            background: repeating-linear-gradient(
+                    to right,
+                    rgba(255,0,0,0.7) 0px,
+                    rgba(255,0,0,0.7) 80px,
+                    transparent 80px,
+                    transparent 120px
+            );
+        }
+        #copy-text {
+            white-space: pre;
+        }
+        @media (max-width: 576px) {
+            .coin {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+            .hexagram-display {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">I Ching Coin Casting</h1>
+    <div id="coin-container" class="coin-container">
+        <div class="coin" onclick="castCoin()">Cast</div>
+        <div class="coin" onclick="castCoin()">Cast</div>
+        <div class="coin" onclick="castCoin()">Cast</div>
+    </div>
+    <div id="results" class="mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <h3 class="text-center">Original Hexagram</h3>
+                <div class="hexagram-display">
+                    <div id="original-hex" class="hexagram-lines"></div>
+                </div>
+                <div id="original-number" class="text-center mt-2"></div>
+            </div>
+            <div class="col-12 col-md-6" id="transformed-container" style="display: none;">
+                <h3 class="text-center">Transformed Hexagram</h3>
+                <div class="hexagram-display">
+                    <div id="transformed-hex" class="hexagram-lines"></div>
+                </div>
+                <div id="transformed-number" class="text-center mt-2"></div>
+            </div>
+        </div>
+    </div>
+    <div id="copy-text" class="mt-4 p-3 bg-light border text-center"></div>
+    <div class="text-center">
+        <button id="copy-button" class="btn btn-primary mt-2" style="display: none;" onclick="copyResult()">Copy Result</button>
+        <button id="cast-again" class="btn btn-secondary mt-3" style="display: none;" onclick="resetCasting()">Cast Again</button>
+    </div>
+</div>
+
+<script>
+    let casts = [];
+    const hexagrams = {
+        '111111': 1, '000000': 2, '010010': 3, '010011': 4, '111010': 5, '010111': 6, '010000': 7, '000010': 8,
+        '111011': 9, '110111': 10, '111000': 11, '000111': 12, '101111': 13, '111101': 14, '001000': 15, '000100': 16,
+        '110010': 17, '010011': 18, '110000': 19, '000011': 20, '100010': 21, '010001': 22, '000001': 23, '100000': 24,
+        '100111': 25, '111001': 26, '100001': 27, '011110': 28, '010010': 29, '101101': 30, '001110': 31, '011100': 32,
+        '111100': 33, '001111': 34, '000101': 35, '101000': 36, '101011': 37, '110101': 38, '001010': 39, '010100': 40,
+        '100011': 41, '110001': 42, '111110': 43, '011111': 44, '000110': 45, '011000': 46, '011010': 47, '010110': 48,
+        '101110': 49, '011101': 50, '100100': 51, '001001': 52, '001011': 53, '110100': 54, '101100': 55, '001101': 56,
+        '011011': 57, '110110': 58, '110010': 59, '010011': 60, '110011': 61, '001100': 62, '101010': 63, '010101': 64
+    };
+
+    function castCoin() {
+        if (casts.length >= 6) return;
+        const result = Math.floor(Math.random() * 2) + Math.floor(Math.random() * 2) + Math.floor(Math.random() * 2) + 6;
+        casts.push(result);
+        updateDisplay();
+    }
+
+    function getTransformedLines(casts) {
+        return casts.map(c => {
+            if (c === 6) return 7;
+            if (c === 9) return 8;
+            return c;
+        });
+    }
+
+    function generateLinesHTML(lines, changingIndices = []) {
+        return lines.map((line, index) => {
+            const isBroken = line === 6 || line === 8;
+            const isChanging = changingIndices.includes(index);
+            let className = 'line';
+            if (isBroken) className += ' broken';
+            if (isChanging) className += ' changing';
+            return `<div class="${className}"></div>`;
+        }).join('');
+    }
+
+    function updateDisplay() {
+        const originalHex = document.getElementById('original-hex');
+        originalHex.innerHTML = generateLinesHTML(casts, casts.map((c, i) => (c === 6 || c === 9) ? i : -1).filter(x => x >= 0));
+
+        if (casts.length === 6) {
+            const transformedLines = getTransformedLines(casts);
+            document.getElementById('transformed-hex').innerHTML = generateLinesHTML(transformedLines);
+
+            const originalBinary = casts.map(c => (c === 6 || c === 8) ? '0' : '1').join('');
+            const transformedBinary = transformedLines.map(c => (c === 8) ? '0' : '1').join('');
+            const hexagram = getHexagramNumber(originalBinary);
+            const transformedHex = getHexagramNumber(transformedBinary);
+            document.getElementById('original-number').textContent = `Hexagram ${hexagram}`;
+            document.getElementById('transformed-number').textContent = `Hexagram ${transformedHex}`;
+
+            const changingLines = casts.map((c, i) => (c === 6 || c === 9) ? i + 1 : null).filter(x => x !== null);
+            document.getElementById('copy-text').textContent = `Hexagram: ${hexagram}\nTransformed: ${transformedHex}\nLines: ${changingLines.length > 0 ? changingLines.join(',') : 'None'}`;
+
+            document.getElementById('transformed-container').style.display = 'block';
+            document.getElementById('copy-button').style.display = 'inline-block';
+            document.getElementById('cast-again').style.display = 'inline-block';
+            document.getElementById('coin-container').style.display = 'none';
+        } else {
+            document.getElementById('transformed-container').style.display = 'none';
+            document.getElementById('copy-button').style.display = 'none';
+            document.getElementById('cast-again').style.display = 'none';
+            document.getElementById('coin-container').style.display = 'flex';
+        }
+    }
+
+    function getHexagramNumber(binary) {
+        return hexagrams[binary] || 'Unknown';
+    }
+
+    function copyResult() {
+        const text = document.getElementById('copy-text').textContent;
+        navigator.clipboard.writeText(text);
+        alert('Result copied to clipboard!');
+    }
+
+    function resetCasting() {
+        casts = [];
+        updateDisplay();
+    }
+</script>
+</body>
+</html>
