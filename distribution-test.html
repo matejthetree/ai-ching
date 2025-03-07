@@ -8,8 +8,8 @@
         const results = {6: 0, 7: 0, 8: 0, 9: 0};
         const trials = 100000;
         
-<        // Test the castCoin logic directly
-        for (let i = 0; i  trials; i++) {
+        // Test the castCoin logic directly
+        for (let i = 0; i < trials; i++) {
             const result = Math.floor(Math.random() * 2) + 
                          Math.floor(Math.random() * 2) + 
                          Math.floor(Math.random() * 2) + 6;
@@ -32,8 +32,8 @@
 
         // Build results display
         let output = `<h2>Distribution Test Results (${trials.toLocaleString()} trials)</h2>`;
-        output += `<pre>Total time: ${(<Date.now() - startTime)}ms</pre>`;
-        output += '<table><tr>th>Result</th><th>Count</th><th>Actual %</th><th>Expected %</th><th>Status</th></tr>';
+        output += `<pre>Total time: ${Date.now() - startTime}ms</pre>`;
+        output += '<table><tr><th>Result</th><th>Count</th><th>Actual %</th><th>Expected %</th><th>Status</th></tr>';
         
         for (const [result, count] of Object.entries(results)) {
             const actualPct = (count / trials * 100).toFixed(2);
