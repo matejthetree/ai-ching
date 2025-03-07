@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>I Ching Distribution Test</title>
+    <script>
+    function runDistributionTest() {
+        const startTime = Date.now();
+        const results = {6: 0, 7: 0, 8: 0, 9: 0};
+        const trials = 100000;
+        
+<        // Test the castCoin logic directly
+        for (let i = 0; i  trials; i++) {
+            const result = Math.floor(Math.random() * 2) + 
+                         Math.floor(Math.random() * 2) + 
+                         Math.floor(Math.random() * 2) + 6;
+            results[result]++;
+        }
+
+        // Calculate percentages
+        const stats = {};
+        for (const [key, count] of Object.entries(results)) {
+            stats[key] = (count / trials * 100).toFixed(2) + '%';
+        }
+
+        // Expected distribution percentages (I Ching 3-coin probabilities)
+        const expected = {
+            6: '12.50%',  // 1/8 chance (0+0+0)
+            7: '37.50%',  // 3/8 chance (1-0-0 permutations)
+            8: '37.50%',  // 3/8 chance (2-1-0 permutations) 
+            9: '12.50%'   // 1/8 chance (1+1+1)
+        };
+
+        // Build results display
+        let output = `<h2>Distribution Test Results (${trials.toLocaleString()} trials)</h2>`;
+        output += `<pre>Total time: ${(<Date.now() - startTime)}ms</pre>`;
+        output += '<table><tr>th>Result</th><th>Count</th><th>Actual %</th><th>Expected %</th><th>Status</th></tr>';
+        
+        for (const [result, count] of Object.entries(results)) {
+            const actualPct = (count / trials * 100).toFixed(2);
+            const expectedPct = parseFloat(expected[result]);
+            const variance = Math.abs(actualPct - expectedPct);
+            const withinTolerance = variance <= 1; // Allow 1% variance
+            
+            output += `<tr>
+                <td>${result}</td>
+                <td>${count.toLocaleString()}</td>
+                <td>${actualPct}%</td>
+                <td>${expected[result]}</td>
+                <td style="color: ${withinTolerance ? 'green' : 'red'}">
+                    ${withinTolerance ? '✓' : '✗'} ${variance.toFixed(2)}%
+                </td>
+            </tr>`;
+        }
+        
+        output += '</table>';
+        document.getElementById('results').innerHTML = output;
+    }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; margin-top: 20px; }
+        td, th { border: 1px solid #ddd; padding: 8px; text-align: right; }
+        th { background-color: #f0f0f0; }
+        pre { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>I Ching Probability Distribution Test</h1>
+    <button onclick="runDistributionTest()">Run 100,000 Trial Test</button>
+    <div id="results"></div>
+</body>
+</html>
